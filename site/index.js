@@ -61,21 +61,18 @@ controller = {
   
       rectangle.y_velocity -= 20;
       rectangle.jumping = true;
-      enemy.y_velocity -= Math.random() * 20;
-  
+
     }
   
     if (controller.left) {
   
       rectangle.x_velocity -= 0.5;
-      enemy.x_velocity += Math.random();
   
     }
   
     if (controller.right) {
   
       rectangle.x_velocity += 0.5;
-      enemy.x_velocity -= Math.random();
   
     }
 /*
