@@ -18,6 +18,16 @@ rectangle = {
     y_velocity:0
 };
 
+enemy = {
+  height: 32,
+  jumping: true,
+  width:32,
+  x:100, 
+  x_velocity:0,
+  y:0,
+  y_velocity:0
+};
+
 controller = {
 
     left:false,
@@ -51,27 +61,48 @@ controller = {
   
       rectangle.y_velocity -= 20;
       rectangle.jumping = true;
+      enemy.y_velocity -= Math.random() * 20;
   
     }
   
     if (controller.left) {
   
       rectangle.x_velocity -= 0.5;
+      enemy.x_velocity += Math.random();
   
     }
   
     if (controller.right) {
   
       rectangle.x_velocity += 0.5;
+      enemy.x_velocity -= Math.random();
   
     }
+/*
+      for (m = Math.random() * 10; m < Math.random() * 10; m++){
+        enemy.x_velocity -= Math.random();
+      }
+
+      for (m = Math.random() * 10; m < Math.random() * 10; m++){
+        enemy.x_velocity += Math.random();
+      }
+  */
   
     //physics stuff
+    //player
     rectangle.y_velocity += 1.5;// gravity
     rectangle.x += rectangle.x_velocity;
     rectangle.y += rectangle.y_velocity;
     rectangle.x_velocity *= 0.9;// friction
     rectangle.y_velocity *= 0.9;// friction
+
+    //enemies
+    enemy.y_velocity += 1.5;// gravity
+    enemy.x += enemy.x_velocity;
+    enemy.y += enemy.y_velocity;
+    enemy.x_velocity *= 0.9;// friction
+    enemy.y_velocity *= 0.9;// friction
+  
   
     // if rectangle is falling below floor line
     if (rectangle.y > 280 - 16 - 32) {
@@ -92,10 +123,29 @@ controller = {
       rectangle.x = -32;
   
     }
+
+    if (enemy.y > 280 - 16 - 32) {
+  
+      enemy.jumping = false;
+      enemy.y = 280 - 16 - 32;
+      enemy.y_velocity = 0;
+  
+    }
+  
+    // if rectangle is going off the left of the screen
+    if (enemy.x < -32) {
+  
+      enemy.x = 480;
+  
+    } else if (enemy.x > 480) {// if rectangle goes past right boundary
+  
+      enemy.x = -32;
+  
+    }
   
     ctx.fillStyle = "#202020";
     ctx.fillRect(0, 0, 520, 480);// x, y, width, height
-    ctx.fillStyle = "#ff0000";// hex for red
+    ctx.fillStyle = "#32CD32";// hex for lime green
     ctx.beginPath();
     ctx.rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
     ctx.fill();
@@ -105,6 +155,10 @@ controller = {
     ctx.moveTo(0, 264);
     ctx.lineTo(500, 264);
     ctx.stroke();
+    ctx.fillStyle = "#ff0000";
+    ctx.beginPath();
+    ctx.rect(enemy.x, enemy.y, enemy.width, enemy.height);
+    ctx.fill();
   
     // call update when the browser is ready to draw again
     window.requestAnimationFrame(loop);
@@ -133,4 +187,11 @@ function pad(val) {
   } else {
     return valString;
   }
+}
+
+function addEnemies(){
+  ctx.fillStyle = "#ff0000";
+  ctx.beginPath();
+  ctx.rect(enemy.x, enemy.y, enemy.width, enemy.height);
+  ctx.fill();
 }
