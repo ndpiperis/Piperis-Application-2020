@@ -47,7 +47,7 @@ controller = {
 
   loop = function() {
 
-    if (controller.up && rectangle.jumping == false) {
+    if (controller.up && rectangle.jumping == false) {  //if up button is pressed 
   
       rectangle.y_velocity -= 20;
       rectangle.jumping = true;
@@ -66,6 +66,7 @@ controller = {
   
     }
   
+    //physics stuff
     rectangle.y_velocity += 1.5;// gravity
     rectangle.x += rectangle.x_velocity;
     rectangle.y += rectangle.y_velocity;
@@ -114,3 +115,22 @@ controller = {
   window.addEventListener("keyup", controller.keyListener);
   window.requestAnimationFrame(loop);
   
+var minutesLabel = document.getElementById("minutes");
+var secondsLabel = document.getElementById("seconds");
+var totalSeconds = 0;
+setInterval(setTime, 1000);
+
+function setTime() {
+  ++totalSeconds;
+  secondsLabel.innerHTML = pad(totalSeconds % 60);
+  minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
+}
+
+function pad(val) {
+  var valString = val + "";
+  if (valString.length < 2) {
+    return "0" + valString;
+  } else {
+    return valString;
+  }
+}
