@@ -5,14 +5,21 @@ var loop;
 
 ctx = document.querySelector("canvas").getContext("2d");
 
-ctx.canvas.height = 320;
-ctx.canvas.width = 480;
+ctx.canvas.height = 720;
+ctx.canvas.width = 1080;
+
+var img = document.createElement("img");
+
+img.src = "8bit_man.png";
+
+var src = document.getElementById("canvas");
+src.appendChild(img);
 
 rectangle = {
     height: 32,
     jumping: true,
     width:32,
-    x:225, //center of canvas
+    x:500, //center of canvas
     x_velocity:0,
     y:0,
     y_velocity:0
@@ -59,7 +66,7 @@ controller = {
 
     if (controller.up && rectangle.jumping == false) {  //if up button is pressed 
   
-      rectangle.y_velocity -= 20;
+      rectangle.y_velocity -= 25;
       rectangle.jumping = true;
 
     }
@@ -75,7 +82,7 @@ controller = {
       rectangle.x_velocity += 0.5;
   
     }
-/*
+
       for (m = Math.random() * 10; m < Math.random() * 10; m++){
         enemy.x_velocity -= Math.random();
       }
@@ -83,7 +90,7 @@ controller = {
       for (m = Math.random() * 10; m < Math.random() * 10; m++){
         enemy.x_velocity += Math.random();
       }
-  */
+
   
     //physics stuff
     //player
@@ -91,7 +98,7 @@ controller = {
     rectangle.x += rectangle.x_velocity;
     rectangle.y += rectangle.y_velocity;
     rectangle.x_velocity *= 0.9;// friction
-    rectangle.y_velocity *= 0.9;// friction
+    rectangle.y_velocity *= 1;// friction
 
     //enemies
     enemy.y_velocity += 1.5;// gravity
@@ -102,10 +109,10 @@ controller = {
   
   
     // if rectangle is falling below floor line
-    if (rectangle.y > 280 - 16 - 32) {
+    if (rectangle.y > 680 - 16 - 32) {
   
       rectangle.jumping = false;
-      rectangle.y = 280 - 16 - 32;
+      rectangle.y = 680 - 16 - 32;
       rectangle.y_velocity = 0;
   
     }
@@ -113,18 +120,18 @@ controller = {
     // if rectangle is going off the left of the screen
     if (rectangle.x < -32) {
   
-      rectangle.x = 480;
+      rectangle.x = 1080;
   
-    } else if (rectangle.x > 480) {// if rectangle goes past right boundary
+    } else if (rectangle.x > 1080) {// if rectangle goes past right boundary
   
       rectangle.x = -32;
   
     }
 
-    if (enemy.y > 280 - 16 - 32) {
+    if (enemy.y > 678 - 16 - 32) {
   
       enemy.jumping = false;
-      enemy.y = 280 - 16 - 32;
+      enemy.y = 678 - 16 - 32;
       enemy.y_velocity = 0;
   
     }
@@ -132,16 +139,16 @@ controller = {
     // if rectangle is going off the left of the screen
     if (enemy.x < -32) {
   
-      enemy.x = 480;
+      enemy.x = 1080;
   
-    } else if (enemy.x > 480) {// if rectangle goes past right boundary
+    } else if (enemy.x > 1080) {// if rectangle goes past right boundary
   
       enemy.x = -32;
   
     }
   
     ctx.fillStyle = "#202020";
-    ctx.fillRect(0, 0, 520, 480);// x, y, width, height
+    ctx.fillRect(0, 0, 1080, 720);// x, y, width, height
     ctx.fillStyle = "#32CD32";// hex for lime green
     ctx.beginPath();
     ctx.rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
@@ -149,8 +156,10 @@ controller = {
     ctx.strokeStyle = "#202830";
     ctx.lineWidth = 4;
     ctx.beginPath();
-    ctx.moveTo(0, 264);
-    ctx.lineTo(500, 264);
+    ctx.moveTo(0, 664);
+    ctx.lineTo(1080, 664);
+    ctx.moveTo(200, 564);
+    ctx.lineTo(400, 564);
     ctx.stroke();
     ctx.fillStyle = "#ff0000";
     ctx.beginPath();
